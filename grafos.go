@@ -6,14 +6,14 @@ import (
 	"github.com/yourbasic/graph"
 )
 
-func main() {
+var vertexCount int     //almacena la cantidad de nodos que tendra el grafo
+var graphType int       //si el grafo sera undirected o directed
+var addEdgeCheck string //bandera para añadir aristas
+var edgeCost string     //para definir si la arista tendra peso o no
+var vertex [2]int       //de donde a donde va la arista sin peso
+var cost int64
 
-	var vertexCount int //almacena la cantidad de nodos que tendra el grafo
-	var graphType int
-	var addEdgeCheck int //bandera para añadir aristas
-	var edgeCost int     //para definir si la arista tendra peso o no
-	var vertex [2]int    //de donde a donde va la arista sin peso
-	var cost int64
+func main() {
 
 	//tamaño del grafo
 	fmt.Print("Introduzca la cantidad de 'Nodos' o ' Vertices' que tendra el Grafo: ")
@@ -26,21 +26,21 @@ func main() {
 
 	//grafo no dirigido
 	if graphType == 0 {
-		fmt.Println("Desea añadir aristas al nodo? (0 para no 1 para si)")
-		fmt.Scanf("%d", &addEdgeCheck)
+		fmt.Println("Desea añadir aristas al nodo? (y/n)")
+		fmt.Scanf("%s", &addEdgeCheck)
 		//si o no añadir aristas al nodo
-		if addEdgeCheck == 1 {
-			fmt.Print("La arista tendra peso? (0 para no, 1 para si): ")
-			fmt.Scanf("%d", &edgeCost)
-			if edgeCost == 0 {
+		if addEdgeCheck == "y" {
+			fmt.Print("La arista tendra peso? (y/n): ")
+			fmt.Scanf("%s", &edgeCost)
+			if edgeCost == "n" {
 				//origen y fin de arista
 				fmt.Println("Indique de que vertice a que vertice se creara la arista, no importa el orden")
 				//vertice 1
 				fmt.Print("Vertice 1: ")
-				fmt.Scanf("%d", vertex[0])
+				fmt.Scanf("%d", &vertex[0])
 				//vertice 2
 				fmt.Print("Vertice 2: ")
-				fmt.Scanf("%d", vertex[1])
+				fmt.Scanf("%d", &vertex[1])
 				//vertex[2] = nil
 				//creando arista
 				g.AddBoth(vertex[0], vertex[1])
@@ -49,10 +49,10 @@ func main() {
 				fmt.Println("Indique de que vertice a que vertice se creara la arista, no importa el orden")
 				//vertice 1
 				fmt.Print("Vertice 1: ")
-				fmt.Scanf("%d", vertex[0])
+				fmt.Scanf("%d", &vertex[0])
 				//vertice 2
 				fmt.Print("Vertice 2: ")
-				fmt.Scanf("%d", vertex[1])
+				fmt.Scanf("%d", &vertex[1])
 				//peso de arista
 				fmt.Print("Indique el peso de esta arista: ")
 				fmt.Scanf("%d", &cost)
@@ -64,20 +64,20 @@ func main() {
 		}
 	} else { //grafo no dirigido
 		fmt.Println("Desea añadir aristas al nodo? (0 para no 1 para si)")
-		fmt.Scanf("%d", &addEdgeCheck)
-		if addEdgeCheck == 1 {
+		fmt.Scanf("%s", &addEdgeCheck)
+		if addEdgeCheck == "y" {
 			fmt.Print("La arista tendra peso? (0 para no, 1 para si): ")
-			fmt.Scanf("%d", &edgeCost)
-			if edgeCost == 0 {
+			fmt.Scanf("%s", &edgeCost)
+			if edgeCost == "n" {
 				//origen y fin de arista
 				fmt.Println("Indique de que vertice a que vertice se creara la arista.")
 				fmt.Println("AVISO! El orden en que introduzca los vertices influira en la direccion de la arista (1 => 2)")
 				//vertice 1
 				fmt.Print("Vertice 1: ")
-				fmt.Scanf("%d", vertex[0])
+				fmt.Scanf("%d", &vertex[0])
 				//vertice 2
 				fmt.Print("Vertice 2: ")
-				fmt.Scanf("%d", vertex[1])
+				fmt.Scanf("%d", &vertex[1])
 				//vertex[2] = nil
 				//creando arista
 				g.Add(vertex[0], vertex[1])
@@ -87,10 +87,10 @@ func main() {
 				fmt.Println("AVISO! El orden en que introduzca los vertices influira en la direccion de la arista (1 => 2)")
 				//vertice 1
 				fmt.Print("Vertice 1: ")
-				fmt.Scanf("%d", vertex[0])
+				fmt.Scanf("%d", &vertex[0])
 				//vertice 2
 				fmt.Print("Vertice 2: ")
-				fmt.Scanf("%d", vertex[1])
+				fmt.Scanf("%d", &vertex[1])
 				//peso de arista
 				fmt.Print("Indique el peso de esta arista: ")
 				fmt.Scanf("%d", &cost)
