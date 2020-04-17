@@ -20,6 +20,14 @@ func main() {
 	fmt.Scanf("%d", &vertexCount)
 	//construyo el grafo con el tamaño solicitado antes
 	g := graph.New(vertexCount)
+	matrix := make([][]int, vertexCount)
+	for i := 0; i < vertexCount; i++ {
+		matrix[i] = make([]int, vertexCount)
+	}
+	// fmt.Println(matrix[0])
+	// fmt.Println(matrix[1])
+	// fmt.Println(matrix[2])
+	// fmt.Println(matrix[3])
 	//pregunto que tipo de grafo sera
 	fmt.Println("El grafo será undirected o directed? (0 para undirected, 1 para directed)")
 	fmt.Scanf("%d", &graphType)
@@ -44,9 +52,9 @@ func main() {
 					//vertice 2
 					fmt.Print("Vertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
-					//vertex[2] = nil
 					//creando arista
 					g.AddBoth(vertex[0], vertex[1])
+					matrix[vertex[0]][vertex[1]] = 1
 				} else {
 					//origen y fin de arista
 					fmt.Println("Indique de que vertice a que vertice se creara la arista, no importa el orden")
@@ -61,6 +69,7 @@ func main() {
 					fmt.Scanf("%d", &cost)
 					//creando arista
 					g.AddBothCost(vertex[0], vertex[1], cost)
+					matrix[vertex[0]][vertex[1]] = 1
 				}
 				fmt.Print("Desea añadir otra arista? (y/n): ")
 				fmt.Scanf("%s", &addEdgeCheck)
@@ -92,6 +101,7 @@ func main() {
 					//vertex[2] = nil
 					//creando arista
 					g.Add(vertex[0], vertex[1])
+					matrix[vertex[0]][vertex[1]] = 1
 				} else {
 					//origen y fin de arista
 					fmt.Println("Indique de que vertice a que vertice se creara la arista.")
@@ -107,6 +117,7 @@ func main() {
 					fmt.Scanf("%d", &cost)
 					//creando arista
 					g.AddCost(vertex[0], vertex[1], cost)
+					matrix[vertex[0]][vertex[1]] = 1
 				}
 				fmt.Print("Desea añadir otra arista? (y/n): ")
 				fmt.Scanf("%s", &addEdgeCheck)
@@ -122,5 +133,18 @@ func main() {
 	g.AddBoth(0, 2) //  |    |
 	g.AddBoth(2, 3) //  2 -- 3
 	g.AddBoth(1, 3)*/
-	fmt.Println(g.String())
+	fmt.Println("\n\n============================================================\n")
+	fmt.Println("Cantidad de nodos y Cantidad de aristas representadas en una lista")
+	fmt.Println("Cada elemento de la lista posee dos enteros dentro de el.\nEstos indican de que vertice a que vertice van las aristas.")
+	fmt.Println("\n====================================================================\n")
+	fmt.Println(g)
+	fmt.Println("\n====================================================================\n")
+	fmt.Println("Matriz de Adyacencia")
+	fmt.Println("\n====================================================================\n")
+	for i := 0; i < vertexCount; i++ {
+		for j := 0; j < vertexCount; j++ {
+			fmt.Printf("%d ", matrix[i][j])
+		}
+		fmt.Println(" ")
+	}
 }
