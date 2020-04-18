@@ -20,14 +20,14 @@ func main() {
 	fmt.Scanf("%d", &vertexCount)
 	//construyo el grafo con el tamaño solicitado antes
 	g := graph.New(vertexCount)
+	//matriz de adyacencia
 	matrix := make([][]int, vertexCount)
 	for i := 0; i < vertexCount; i++ {
 		matrix[i] = make([]int, vertexCount)
 	}
-	// fmt.Println(matrix[0])
-	// fmt.Println(matrix[1])
-	// fmt.Println(matrix[2])
-	// fmt.Println(matrix[3])
+	//coleccion para matriz de incidencia
+	var coleccion [][2]int
+	var element [2]int
 	//pregunto que tipo de grafo sera
 	fmt.Println("El grafo será undirected o directed? (0 para undirected, 1 para directed)")
 	fmt.Scanf("%d", &graphType)
@@ -54,7 +54,12 @@ func main() {
 					fmt.Scanf("%d", &vertex[1])
 					//creando arista
 					g.AddBoth(vertex[0], vertex[1])
+					//fill matriz de adyacencia
 					matrix[vertex[0]][vertex[1]] = 1
+					//fill matriz de incidencia
+					element[0] = vertex[0]
+					element[1] = vertex[1]
+					coleccion = append(coleccion, element)
 				} else {
 					//origen y fin de arista
 					fmt.Println("Indique de que vertice a que vertice se creara la arista, no importa el orden")
@@ -129,11 +134,30 @@ func main() {
 			fmt.Println("grafo nulo\n")
 		}
 	}
+
+	//CODIGO GUIA NO BORRAR
 	/*g.AddBoth(0, 1)// 0 -- 1
 	g.AddBoth(0, 2) //  |    |
 	g.AddBoth(2, 3) //  2 -- 3
 	g.AddBoth(1, 3)*/
-	fmt.Println("\n\n============================================================\n")
+
+	// creando matriz de incidecia
+	matrix1 := make([][]int, vertexCount)
+	for i := 0; i < vertexCount; i++ {
+		matrix1[i] = make([]int, len(coleccion))
+	}
+
+	// rellenando matriz de incidencia
+	//3 for para recorrer filas y columnas de la matriz y el array dentro de cada elemento de la matriz
+	for i := 0; i < vertexCount; i++ {
+		for j := 0; j < len(coleccion); j++ {
+			for k := 0; k < 2; k++ {
+				matrix1[j][coleccion[j][k]] = 1
+			}
+		}
+	}
+
+	fmt.Println("\n\n==================================================================\n")
 	fmt.Println("Cantidad de nodos y Cantidad de aristas representadas en una lista")
 	fmt.Println("Cada elemento de la lista posee dos enteros dentro de el.\nEstos indican de que vertice a que vertice van las aristas.")
 	fmt.Println("\n====================================================================\n")
@@ -141,9 +165,22 @@ func main() {
 	fmt.Println("\n====================================================================\n")
 	fmt.Println("Matriz de Adyacencia")
 	fmt.Println("\n====================================================================\n")
+
+	//imprimiendo matriz de adyacencia
 	for i := 0; i < vertexCount; i++ {
 		for j := 0; j < vertexCount; j++ {
 			fmt.Printf("%d ", matrix[i][j])
+		}
+		fmt.Println(" ")
+	}
+
+	//imprimiendo matriz de incidencia
+	fmt.Println("\n====================================================================\n")
+	fmt.Println("Matriz de Incidencia")
+	fmt.Println("\n====================================================================\n")
+	for i := 0; i < vertexCount; i++ {
+		for j := 0; j < len(coleccion); j++ {
+			fmt.Printf("%d ", matrix1[i][j])
 		}
 		fmt.Println(" ")
 	}
