@@ -12,6 +12,7 @@ var addEdgeCheck string //bandera para añadir aristas
 var edgeCost string     //para definir si la arista tendra peso o no
 var vertex [2]int       //de donde a donde va la arista sin peso
 var cost int64          //costo de la arista
+var tipoGrafo string
 
 func main() {
 
@@ -34,6 +35,7 @@ func main() {
 
 	//grafo no dirigido
 	if graphType == 0 {
+		tipoGrafo = "No Dirigido"
 		fmt.Println("Desea añadir aristas al nodo? (y/n)")
 		fmt.Scanf("%s", &addEdgeCheck)
 		//si o no añadir aristas al nodo
@@ -83,9 +85,10 @@ func main() {
 				}
 			}
 		} else {
-			fmt.Println("grafo nulo\n")
+			tipoGrafo = "Grafo Nulo"
 		}
 	} else { //grafo dirigido
+		tipoGrafo = "Grafo Dirgido"
 		fmt.Println("Desea añadir aristas al nodo? (y/n)")
 		fmt.Scanf("%s", &addEdgeCheck)
 
@@ -131,7 +134,7 @@ func main() {
 				}
 			}
 		} else {
-			fmt.Println("grafo nulo\n")
+			tipoGrafo = "Grafo Nulo"
 		}
 	}
 
@@ -160,12 +163,12 @@ func main() {
 	fmt.Println("\n\n==================================================================\n")
 	fmt.Println("Cantidad de nodos y Cantidad de aristas representadas en una lista")
 	fmt.Println("Cada elemento de la lista posee dos enteros dentro de el.\nEstos indican de que vertice a que vertice van las aristas.")
+	fmt.Println("De tener ponderacion las aristas, se mostraran luego de cada una de ellas seguidas de ':'")
 	fmt.Println("\n====================================================================\n")
 	fmt.Println(g)
+	fmt.Printf("\nTipo de Grafo: %s\n", tipoGrafo)
 	fmt.Println("\n====================================================================\n")
-	fmt.Println("Matriz de Adyacencia")
-	fmt.Println("\n====================================================================\n")
-
+	fmt.Println("Matriz de Adyacencia\n")
 	//imprimiendo matriz de adyacencia
 	for i := 0; i < vertexCount; i++ {
 		for j := 0; j < vertexCount; j++ {
@@ -173,11 +176,9 @@ func main() {
 		}
 		fmt.Println(" ")
 	}
-
 	//imprimiendo matriz de incidencia
 	fmt.Println("\n====================================================================\n")
-	fmt.Println("Matriz de Incidencia")
-	fmt.Println("\n====================================================================\n")
+	fmt.Println("Matriz de Incidencia\n")
 	for i := 0; i < vertexCount; i++ {
 		for j := 0; j < len(coleccion); j++ {
 			fmt.Printf("%d ", matrix1[i][j])
