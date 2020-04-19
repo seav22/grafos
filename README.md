@@ -6,7 +6,7 @@ Sebastián Álvarez 	C.I: 26.900.740
 
 Pasos para hacer ejecución correcta del programa:
 
-1. Instalar la librería yourbasic/graph. Para ello, abra su consola de comandos y
+1. Instalar la librería **[yourbasic/graph](https://github.com/yourbasic/graph "yourbasic/graph")**. Para ello, abra su consola de comandos y
 copie el siguiente comando: "go get github.com/yourbasic/graph"
 
 2. Descargar o clonar el proyecto (en caso de tener el controlador de versiones Git instalado)
