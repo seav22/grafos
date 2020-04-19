@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	//importando paquete de grafos de github
 	"github.com/yourbasic/graph"
 )
@@ -13,11 +14,15 @@ var edgeCost string     //para definir si la arista tendra peso o no
 var vertex [2]int       //de donde a donde va la arista sin peso
 var cost int64          //costo de la arista
 var tipoGrafo string
+var cuentaAviso int = 0 //Variable que permite llevar el tiempo del aviso
 
 func main() {
 
+	//Función de bienvenida y algunas instrucciones
+	welcomeAndInstrucciones()
+
 	//tamaño del grafo
-	fmt.Print("Introduzca la cantidad de 'Nodos' o ' Vertices' que tendra el Grafo: ")
+	fmt.Print("\nIntroduzca la cantidad de 'Nodos' o ' Vertices' que tendra el Grafo: ")
 	fmt.Scanf("%d", &vertexCount)
 	//construyo el grafo con el tamaño solicitado antes
 	g := graph.New(vertexCount)
@@ -30,13 +35,13 @@ func main() {
 	var coleccion [][2]int
 	var element [2]int
 	//pregunto que tipo de grafo sera
-	fmt.Println("El grafo será undirected o directed? (0 para undirected, 1 para directed)")
+	fmt.Print("¿El grafo será undirected o directed? \nIngrese 0 para undirected, 1 para directed: ")
 	fmt.Scanf("%d", &graphType)
 
 	//grafo no dirigido
 	if graphType == 0 {
 		tipoGrafo = "No Dirigido"
-		fmt.Println("Desea añadir aristas al nodo? (y/n)")
+		fmt.Print("Desea añadir aristas al nodo? (y/n): ")
 		fmt.Scanf("%s", &addEdgeCheck)
 		//si o no añadir aristas al nodo
 		if addEdgeCheck == "y" {
@@ -47,12 +52,16 @@ func main() {
 
 				if edgeCost == "n" {
 					//origen y fin de arista
-					fmt.Println("Indique de que vertice a que vertice se creara la arista, no importa el orden")
+					//Revisando si ya se hizo el aviso de empezar por el nodo 0
+					if cuentaAviso == 0 {
+						recordatorioCero(vertexCount)
+					}
+					fmt.Println("\nIndique de que vertice a que vertice se creara la arista: ")
 					//vertice 1
-					fmt.Print("Vertice 1: ")
+					fmt.Print("\nVertice 1: ")
 					fmt.Scanf("%d", &vertex[0])
 					//vertice 2
-					fmt.Print("Vertice 2: ")
+					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
 					//creando arista
 					g.AddBoth(vertex[0], vertex[1])
@@ -62,23 +71,29 @@ func main() {
 					element[0] = vertex[0]
 					element[1] = vertex[1]
 					coleccion = append(coleccion, element)
+					cuentaAviso = cuentaAviso + 1
 				} else {
 					//origen y fin de arista
-					fmt.Println("Indique de que vertice a que vertice se creara la arista, no importa el orden")
+					//Revisando si ya se hizo el aviso de empezar por el nodo 0
+					if cuentaAviso == 0 {
+						recordatorioCero(vertexCount)
+					}
+					fmt.Println("\nIndique de que vertice a que vertice se creara la arista:")
 					//vertice 1
-					fmt.Print("Vertice 1: ")
+					fmt.Print("\nVertice 1: ")
 					fmt.Scanf("%d", &vertex[0])
 					//vertice 2
-					fmt.Print("Vertice 2: ")
+					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
 					//peso de arista
-					fmt.Print("Indique el peso de esta arista: ")
+					fmt.Print("\nIndique el peso de esta arista: ")
 					fmt.Scanf("%d", &cost)
 					//creando arista
 					g.AddBothCost(vertex[0], vertex[1], cost)
 					matrix[vertex[0]][vertex[1]] = 1
+					cuentaAviso = cuentaAviso + 1
 				}
-				fmt.Print("Desea añadir otra arista? (y/n): ")
+				fmt.Print("\nDesea añadir otra arista? (y/n): ")
 				fmt.Scanf("%s", &addEdgeCheck)
 				if addEdgeCheck == "n" {
 					break
@@ -89,7 +104,7 @@ func main() {
 		}
 	} else { //grafo dirigido
 		tipoGrafo = "Grafo Dirgido"
-		fmt.Println("Desea añadir aristas al nodo? (y/n)")
+		fmt.Print("Desea añadir aristas al nodo? (y/n): ")
 		fmt.Scanf("%s", &addEdgeCheck)
 
 		if addEdgeCheck == "y" {
@@ -99,35 +114,45 @@ func main() {
 				if edgeCost == "n" {
 					//origen y fin de arista
 					fmt.Println("Indique de que vertice a que vertice se creara la arista.")
-					fmt.Println("AVISO! El orden en que introduzca los vertices influira en la direccion de la arista (1 => 2)")
+					//Revisando si ya se hizo el aviso de empezar por el nodo 0
+					if cuentaAviso == 0 {
+						recordatorioCero(vertexCount)
+					}
+					fmt.Println("\n¡AVISO! El orden en que introduzca los vertices influira en la direccion de la arista (1 => 2)")
 					//vertice 1
-					fmt.Print("Vertice 1: ")
+					fmt.Print("\nVertice 1: ")
 					fmt.Scanf("%d", &vertex[0])
 					//vertice 2
-					fmt.Print("Vertice 2: ")
+					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
 					//vertex[2] = nil
 					//creando arista
 					g.Add(vertex[0], vertex[1])
 					matrix[vertex[0]][vertex[1]] = 1
+					cuentaAviso = cuentaAviso + 1
 				} else {
 					//origen y fin de arista
 					fmt.Println("Indique de que vertice a que vertice se creara la arista.")
-					fmt.Println("AVISO! El orden en que introduzca los vertices influira en la direccion de la arista (1 => 2)")
+					//Revisando si ya se hizo el aviso de empezar por el nodo 0
+					if cuentaAviso == 0 {
+						recordatorioCero(vertexCount)
+					}
+					fmt.Println("\n¡AVISO! El orden en que introduzca los vertices influira en la direccion de la arista (1 => 2)")
 					//vertice 1
-					fmt.Print("Vertice 1: ")
+					fmt.Print("\nVertice 1: ")
 					fmt.Scanf("%d", &vertex[0])
 					//vertice 2
-					fmt.Print("Vertice 2: ")
+					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
 					//peso de arista
-					fmt.Print("Indique el peso de esta arista: ")
+					fmt.Print("\nIndique el peso de esta arista: ")
 					fmt.Scanf("%d", &cost)
 					//creando arista
 					g.AddCost(vertex[0], vertex[1], cost)
 					matrix[vertex[0]][vertex[1]] = 1
+					cuentaAviso = cuentaAviso + 1
 				}
-				fmt.Print("Desea añadir otra arista? (y/n): ")
+				fmt.Print("\nDesea añadir otra arista? (y/n): ")
 				fmt.Scanf("%s", &addEdgeCheck)
 				if addEdgeCheck == "n" {
 					break
@@ -161,28 +186,62 @@ func main() {
 	}
 
 	fmt.Println("\n\n==================================================================\n")
-	fmt.Println("Cantidad de nodos y Cantidad de aristas representadas en una lista")
-	fmt.Println("Cada elemento de la lista posee dos enteros dentro de el.\nEstos indican de que vertice a que vertice van las aristas.")
-	fmt.Println("De tener ponderacion las aristas, se mostraran luego de cada una de ellas seguidas de ':'")
+	fmt.Println("La cantidad de nodos y la cantidad de aristas están representadas en una lista.")
+	fmt.Println("Cada elemento de la lista posee dos enteros dentro de él.\nEstos indican de cuál vértice a cuál vértice van las aristas.")
+	fmt.Println("De tener ponderación, las aristas se mostrarán luego de cada una de ellas seguidas de ':'")
 	fmt.Println("\n====================================================================\n")
 	fmt.Println(g)
 	fmt.Printf("\nTipo de Grafo: %s\n", tipoGrafo)
 	fmt.Println("\n====================================================================\n")
-	fmt.Println("Matriz de Adyacencia\n")
+	fmt.Println("                Matriz de Adyacencia\n")
 	//imprimiendo matriz de adyacencia
+
 	for i := 0; i < vertexCount; i++ {
+		if i == 0 {
+			fmt.Print("                     [", i, "]")
+		} else {
+			fmt.Print("[", i, "]")
+		}
+	}
+	fmt.Println("")
+	for i := 0; i < vertexCount; i++ {
+		fmt.Print("		  [", i, "] ")
 		for j := 0; j < vertexCount; j++ {
-			fmt.Printf("%d ", matrix[i][j])
+			fmt.Printf("%d  ", matrix[i][j])
 		}
 		fmt.Println(" ")
 	}
 	//imprimiendo matriz de incidencia
 	fmt.Println("\n====================================================================\n")
-	fmt.Println("Matriz de Incidencia\n")
+	fmt.Println("                Matriz de Incidencia\n")
+
 	for i := 0; i < vertexCount; i++ {
+		if i == 0 {
+			fmt.Print("                     [", i, "]")
+		} else {
+			fmt.Print("[", i, "]")
+		}
+	}
+	fmt.Println("")
+	for i := 0; i < vertexCount; i++ {
+		fmt.Print("		  [", i, "] ")
 		for j := 0; j < len(coleccion); j++ {
-			fmt.Printf("%d ", matrix1[i][j])
+			fmt.Printf("%d  ", matrix1[i][j])
 		}
 		fmt.Println(" ")
 	}
-}
+	fmt.Println("\n====================================================================\n")
+} //Fin funión main
+
+//Creando función con bienvenida e instrucciones
+func welcomeAndInstrucciones() {
+	fmt.Println("\n¡Bienvenido a Grafos! Programa elaborado por:\nSebastián Avendaño C.I: 26.765.567.\nSebastián Álvarez  C.I: 26.900.740.")
+	fmt.Println("Cátedra: Estructuras Discretas II. Profesor Ing. Jetro López. \nIngeniería en Computación - Universidad José Antonio Páez.")
+	fmt.Println("\nA continuación, deberá ingresar el número de nodos que tendrá el grafo, así como el tipo del grafo.")
+} //Final de función con bienvenida e instrucciones
+
+//Función con instrucciones para la introducción de aristas
+func recordatorioCero(nodos int) {
+	fmt.Println("\n¡Recuerde que debe comenzar por el primer nodo (el nodo 0) y debe llegar hasta el último nodo, es decir, el nodo ", (nodos - 1), "!")
+	fmt.Println("En caso contrario, podría caer en condición de error")
+} //Fin función de instrucciones para la introduccion de aristas
