@@ -91,6 +91,7 @@ func main() {
 					//creando arista
 					g.AddBothCost(vertex[0], vertex[1], cost)
 					matrix[vertex[0]][vertex[1]] = 1
+					coleccion = append(coleccion, element)
 					cuentaAviso = cuentaAviso + 1
 				}
 				fmt.Print("\nDesea añadir otra arista? (y/n): ")
@@ -129,6 +130,7 @@ func main() {
 					//creando arista
 					g.Add(vertex[0], vertex[1])
 					matrix[vertex[0]][vertex[1]] = 1
+					coleccion = append(coleccion, element)
 					cuentaAviso = cuentaAviso + 1
 				} else {
 					//origen y fin de arista
@@ -150,6 +152,7 @@ func main() {
 					//creando arista
 					g.AddCost(vertex[0], vertex[1], cost)
 					matrix[vertex[0]][vertex[1]] = 1
+					coleccion = append(coleccion, element)
 					cuentaAviso = cuentaAviso + 1
 				}
 				fmt.Print("\nDesea añadir otra arista? (y/n): ")
