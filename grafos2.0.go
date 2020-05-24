@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/fogleman/gg"
 )
@@ -42,7 +43,7 @@ func main() {
 		fmt.Println("- Quiera ver la matriz Adyacente?: ")
 		graphType2 := eleccion.elecgraphType()
 
-		if graphType2 == "si" || graphType2 == "SI" || graphType2 == "Si" || graphType2 == "sI" {
+		if strings.ToLower(graphType2) == "si" {
 			//se muestra la matriz
 			g.mostrarAdyacente()
 
@@ -50,7 +51,7 @@ func main() {
 			fmt.Println("- Ahora ¿Quiera ver la matriz de Incidencia?: ")
 			graphType2 = eleccion.elecgraphType()
 
-			if graphType2 == "si" || graphType2 == "SI" || graphType2 == "Si" || graphType2 == "sI" {
+			if strings.ToLower(graphType2) == "si" {
 
 				g.mostrarIncidencia(matrizInci, unionA)
 				fmt.Println("Muchas gracias por usar el programa")
@@ -68,7 +69,7 @@ func main() {
 			fmt.Println("- Quiera ver la matriz Adyacente?: ")
 			graphType2 = eleccion.elecgraphType()
 
-			if graphType2 == "si" || graphType2 == "SI" || graphType2 == "Si" || graphType2 == "sI" {
+			if strings.ToLower(graphType2) == "si" {
 
 				g.mostrarIncidencia(matrizInci, unionA)
 				fmt.Println("Muchas gracias por usar el programa")
@@ -91,7 +92,7 @@ func main() {
 		fmt.Println("- Quiera ver la matriz Adyacente?: ")
 		graphType2 := eleccion.elecgraphType()
 
-		if graphType2 == "si" || graphType2 == "SI" || graphType2 == "Si" || graphType2 == "sI" {
+		if strings.ToLower(graphType2) == "si" {
 			//se muestra la matriz
 			g.mostrarAdyacente()
 
@@ -99,7 +100,7 @@ func main() {
 			fmt.Println("- Ahora ¿Quiera ver la matriz de Incidencia?: ")
 			graphType2 = eleccion.elecgraphType()
 
-			if graphType2 == "si" || graphType2 == "SI" || graphType2 == "Si" || graphType2 == "sI" {
+			if strings.ToLower(graphType2) == "si" {
 
 				g.mostrarIncidencia(matrizInci, unionA)
 				fmt.Println("Muchas gracias por usar el programa")
@@ -117,7 +118,7 @@ func main() {
 			fmt.Println("- Quiera ver la matriz Adyacente?: ")
 			graphType2 = eleccion.elecgraphType()
 
-			if graphType2 == "si" || graphType2 == "SI" || graphType2 == "Si" || graphType2 == "sI" {
+			if strings.ToLower(graphType2) == "si" {
 
 				g.mostrarIncidencia(matrizInci, unionA)
 				fmt.Println("Muchas gracias por usar el programa")
@@ -305,7 +306,7 @@ func (g desarrollo) grafoN() [][2]int {
 
 	// Creamos pantalla
 	pantalla := gg.NewContext(1000, 1000)
-	pantalla.SetRGB(255, 255, 255)
+	pantalla.SetRGB(255, 221, 80)
 
 	for i := 0; i < g.nodos; i++ {
 		for j := 0; j < 2; j++ {
@@ -357,7 +358,7 @@ func (g desarrollo) grafoN() [][2]int {
 	fmt.Print("\n- ¿Desa agregar otra union de nodos (Aristas)? (si/no): ")
 	fmt.Scan(&muestra)
 
-	for muestra == "si" || muestra == "SI" || muestra == "Si" || muestra == "sI" {
+	for strings.ToLower(muestra) == "si" {
 
 		fmt.Println("- Recuerde que las posiciones son de [", g.nombreNodos[0], "] hasta [", g.nombreNodos[ultimaL-1], "]")
 		fmt.Println("-----------------------------------------------------------")
@@ -420,7 +421,7 @@ func (g desarrollo) grafoD() [][2]int {
 
 	// Creamos pantalla
 	pantalla := gg.NewContext(1000, 1000)
-	pantalla.SetRGB(255, 255, 255)
+	pantalla.SetRGB(255, 221, 80)
 
 	for i := 0; i < g.nodos; i++ {
 		for j := 0; j < 2; j++ {
@@ -474,7 +475,7 @@ func (g desarrollo) grafoD() [][2]int {
 	fmt.Print("\n- ¿Desa agregar otra union de nodos (Aristas)? (si/no): ")
 	fmt.Scan(&muestra)
 
-	for muestra == "si" || muestra == "SI" || muestra == "Si" || muestra == "sI" {
+	for strings.ToLower(muestra) == "si" {
 
 		fmt.Println("- Recuerde que las posiciones son de [", g.nombreNodos[0], "] hasta [", g.nombreNodos[ultimaL-1], "]")
 		fmt.Println("-----------------------------------------------------------")

@@ -2,6 +2,10 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
+
+	"github.com/fogleman/gg"
 
 	//importando paquete de grafos de github
 	"github.com/yourbasic/graph"
@@ -15,6 +19,8 @@ var vertex [2]int       //de donde a donde va la arista sin peso
 var cost int64          //costo de la arista
 var tipoGrafo string
 var cuentaAviso int = 0 //Variable que permite llevar el tiempo del aviso
+var xy [2]float64       //coordenadas nodos para plot
+var pares [][2]int      //posiciones de aristas plot
 
 func main() {
 
@@ -24,6 +30,17 @@ func main() {
 	//tamaño del grafo
 	fmt.Print("\nIntroduzca la cantidad de 'Nodos' o ' Vertices' que tendra el Grafo: ")
 	fmt.Scanf("%d", &vertexCount)
+
+	//solicito coordenadas de los nodos
+	var nodeCoor [][2]float64 //almacena los xy de cada nodo
+	for i := 0; i < vertexCount; i++ {
+		fmt.Print("Ingrese la coordenada X del nodo ", i, ": ")
+		fmt.Scanf("%g", &xy[0])
+		fmt.Print("Ingrese la coordenada Y del nodo ", i, ": ")
+		fmt.Scanf("%g", &xy[1])
+		nodeCoor = append(nodeCoor, xy)
+	}
+
 	//construyo el grafo con el tamaño solicitado antes
 	g := graph.New(vertexCount)
 	//matriz de adyacencia
@@ -32,8 +49,7 @@ func main() {
 		matrix[i] = make([]int, vertexCount)
 	}
 	//coleccion para matriz de incidencia
-	var coleccion [][2]int
-	var element [2]int
+	var coleccion [][2]int //slice de vectores
 	//pregunto que tipo de grafo sera
 	fmt.Print("¿El grafo será undirected o directed? \nIngrese 0 para undirected, 1 para directed: ")
 	fmt.Scanf("%d", &graphType)
@@ -44,13 +60,13 @@ func main() {
 		fmt.Print("Desea añadir aristas al nodo? (y/n): ")
 		fmt.Scanf("%s", &addEdgeCheck)
 		//si o no añadir aristas al nodo
-		if addEdgeCheck == "y" {
+		if strings.ToLower(addEdgeCheck) == "y" {
 			//emulando while con for infinito que sera detenido con un BREAK statement
 			for {
 				fmt.Print("La arista tendra peso? (y/n): ")
 				fmt.Scanf("%s", &edgeCost)
 
-				if edgeCost == "n" {
+				if strings.ToLower(edgeCost) == "n" {
 					//origen y fin de arista
 					//Revisando si ya se hizo el aviso de empezar por el nodo 0
 					if cuentaAviso == 0 {
@@ -68,9 +84,7 @@ func main() {
 					//fill matriz de adyacencia
 					matrix[vertex[0]][vertex[1]] = 1
 					//fill matriz de incidencia
-					element[0] = vertex[0]
-					element[1] = vertex[1]
-					coleccion = append(coleccion, element)
+					coleccion = append(coleccion, vertex)
 					cuentaAviso = cuentaAviso + 1
 				} else {
 					//origen y fin de arista
@@ -91,7 +105,7 @@ func main() {
 					//creando arista
 					g.AddBothCost(vertex[0], vertex[1], cost)
 					matrix[vertex[0]][vertex[1]] = 1
-					coleccion = append(coleccion, element)
+					coleccion = append(coleccion, vertex)
 					cuentaAviso = cuentaAviso + 1
 				}
 				fmt.Print("\nDesea añadir otra arista? (y/n): ")
@@ -130,7 +144,7 @@ func main() {
 					//creando arista
 					g.Add(vertex[0], vertex[1])
 					matrix[vertex[0]][vertex[1]] = 1
-					coleccion = append(coleccion, element)
+					coleccion = append(coleccion, vertex)
 					cuentaAviso = cuentaAviso + 1
 				} else {
 					//origen y fin de arista
@@ -152,7 +166,7 @@ func main() {
 					//creando arista
 					g.AddCost(vertex[0], vertex[1], cost)
 					matrix[vertex[0]][vertex[1]] = 1
-					coleccion = append(coleccion, element)
+					coleccion = append(coleccion, vertex)
 					cuentaAviso = cuentaAviso + 1
 				}
 				fmt.Print("\nDesea añadir otra arista? (y/n): ")
@@ -229,11 +243,13 @@ func main() {
 	for i := 0; i < vertexCount; i++ {
 		fmt.Print("		  [", i, "] ")
 		for j := 0; j < len(coleccion); j++ {
-			fmt.Printf("%d  ", matrix1[i][j])
+			fmt.Printf("%d  ", matrix1[j][i])
 		}
 		fmt.Println(" ")
 	}
 	fmt.Println("\n====================================================================\n")
+
+	plot(nodeCoor)
 } //Fin funión main
 
 //Creando función con bienvenida e instrucciones
@@ -248,3 +264,28 @@ func recordatorioCero(nodos int) {
 	fmt.Println("\n¡Recuerde que debe comenzar por el primer nodo (el nodo 0) y debe llegar hasta el último nodo, es decir, el nodo ", (nodos - 1), "!")
 	fmt.Println("En caso contrario, podría caer en condición de error")
 } //Fin función de instrucciones para la introduccion de aristas
+
+//creando canvas
+func plot(nodeCoor [][2]float64) {
+	//seteando canvas
+	canvas := gg.NewContext(1000, 1000)
+	canvas.SetRGB(255, 221, 80)
+
+	//pintar nodos
+	var x, y float64
+	for i := 0; i < len(nodeCoor); i++ {
+		for j := 0; j < 2; j++ {
+			if j == 0 {
+				x = nodeCoor[i][j]
+			} else if j == 1 {
+				y = nodeCoor[i][j]
+			}
+		}
+		canvas.DrawString(strconv.Itoa(i), x, y)
+		canvas.DrawCircle(x, y, 20)
+	}
+	canvas.SetLineWidth(2)
+	canvas.Stroke()
+	canvas.SavePNG("out.png")
+
+}
