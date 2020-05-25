@@ -21,6 +21,8 @@ var tipoGrafo string
 var cuentaAviso int = 0 //Variable que permite llevar el tiempo del aviso
 var xy [2]float64       //coordenadas nodos para plot
 var pares [][2]int      //posiciones de aristas plot
+//coleccion para matriz de incidencia
+var coleccion [][2]int //slice de vectores
 
 func main() {
 
@@ -48,8 +50,8 @@ func main() {
 	for i := 0; i < vertexCount; i++ {
 		matrix[i] = make([]int, vertexCount)
 	}
-	//coleccion para matriz de incidencia
-	var coleccion [][2]int //slice de vectores
+	// //coleccion para matriz de incidencia
+	// var coleccion [][2]int //slice de vectores
 	//pregunto que tipo de grafo sera
 	fmt.Print("¿El grafo será undirected o directed? \nIngrese 0 para undirected, 1 para directed: ")
 	fmt.Scanf("%d", &graphType)
@@ -249,7 +251,7 @@ func main() {
 	}
 	fmt.Println("\n====================================================================\n")
 
-	plot(nodeCoor)
+	plot(nodeCoor, coleccion)
 } //Fin funión main
 
 //Creando función con bienvenida e instrucciones
@@ -266,7 +268,7 @@ func recordatorioCero(nodos int) {
 } //Fin función de instrucciones para la introduccion de aristas
 
 //creando canvas
-func plot(nodeCoor [][2]float64) {
+func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 	//seteando canvas
 	canvas := gg.NewContext(1000, 1000)
 	canvas.SetRGB(255, 221, 80)
@@ -284,6 +286,22 @@ func plot(nodeCoor [][2]float64) {
 		canvas.DrawString(strconv.Itoa(i), x, y)
 		canvas.DrawCircle(x, y, 20)
 	}
+
+	//pintar lineas
+	var x1, y1, x2, y2 float64
+	for i := 0; i < len(coleccion); i++ {
+		for j := 0; j < 2; j++ {
+			if j == 0 {
+				x1 = nodeCoor[i][0]
+				y1 = nodeCoor[i][1]
+			} else {
+				x2 = nodeCoor[][j]
+				y2 = nodeCoor[][]
+			}
+		}
+		canvas.DrawLine(x1, y1, x2, y2)
+	}
+
 	canvas.SetLineWidth(2)
 	canvas.Stroke()
 	canvas.SavePNG("out.png")
