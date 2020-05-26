@@ -261,8 +261,11 @@ func main() {
 	}
 	fmt.Println("\n====================================================================\n")
 
-	fmt.Println(euler(grados))
-
+	//si hay aristas -> comprobacion euler
+	if cuentaAviso > 0 {
+		fmt.Println(euler(grados))
+	}	
+	
 	plot(nodeCoor, coleccion)
 } //Fin funión main
 
