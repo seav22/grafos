@@ -32,6 +32,7 @@ func main() {
 	//tamaño del grafo
 	fmt.Print("\nIntroduzca la cantidad de 'Nodos' o ' Vertices' que tendra el Grafo: ")
 	fmt.Scanf("%d", &vertexCount)
+	grados := make([]int, vertexCount) //slice contador para grados de vertices
 
 	//solicito coordenadas de los nodos
 	var nodeCoor [][2]float64 //almacena los xy de cada nodo
@@ -79,6 +80,9 @@ func main() {
 					//vertice 2
 					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
+					//aumentando grado
+					grados[vertex[0]]++
+					grados[vertex[1]]++
 					//creando arista
 					g.AddBoth(vertex[0], vertex[1])
 					//fill matriz de adyacencia
@@ -99,6 +103,9 @@ func main() {
 					//vertice 2
 					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
+					//aumentando grado
+					grados[vertex[0]]++
+					grados[vertex[1]]++
 					//peso de arista
 					fmt.Print("\nIndique el peso de esta arista: ")
 					fmt.Scanf("%d", &cost)
@@ -140,7 +147,9 @@ func main() {
 					//vertice 2
 					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
-					//vertex[2] = nil
+					//aumentando grado
+					grados[vertex[0]]++
+					grados[vertex[1]]++
 					//creando arista
 					g.Add(vertex[0], vertex[1])
 					matrix[vertex[0]][vertex[1]] = 1
@@ -160,6 +169,9 @@ func main() {
 					//vertice 2
 					fmt.Print("\nVertice 2: ")
 					fmt.Scanf("%d", &vertex[1])
+					//aumentando grado
+					grados[vertex[0]]++
+					grados[vertex[1]]++
 					//peso de arista
 					fmt.Print("\nIndique el peso de esta arista: ")
 					fmt.Scanf("%d", &cost)
@@ -249,6 +261,8 @@ func main() {
 	}
 	fmt.Println("\n====================================================================\n")
 
+	fmt.Println(euler(grados))
+
 	plot(nodeCoor, coleccion)
 } //Fin funión main
 
@@ -265,7 +279,7 @@ func recordatorioCero(nodos int) {
 	fmt.Println("En caso contrario, podría caer en condición de error")
 } //Fin función de instrucciones para la introduccion de aristas
 
-//creando canvas
+//funcion para el ploteo del grafo
 func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 	//seteando canvas
 	canvas := gg.NewContext(1000, 1000)
@@ -306,5 +320,29 @@ func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 
 	canvas.Stroke()
 	canvas.SavePNG("out.png")
+}
 
+//funcion para camino y ciclo euler
+func euler(grados []int) string {
+	even := 0
+	odd := 0
+	var result string
+
+	for i := 0; i < len(grados); i++ {
+		if grados[i]%2 == 0 {
+			even++
+		} else {
+			odd++
+		}
+	}
+
+	if odd == 2 {
+		result = "Hay un camino euleriano"
+	} else if odd == 0 {
+		result = "Hay un ciclo euleriano"
+	} else {
+		result = "No hay ni camino ni ciclo euleriano"
+	}
+
+	return result
 }
