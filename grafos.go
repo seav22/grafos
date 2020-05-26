@@ -50,8 +50,6 @@ func main() {
 	for i := 0; i < vertexCount; i++ {
 		matrix[i] = make([]int, vertexCount)
 	}
-	// //coleccion para matriz de incidencia
-	// var coleccion [][2]int //slice de vectores
 	//pregunto que tipo de grafo sera
 	fmt.Print("¿El grafo será undirected o directed? \nIngrese 0 para undirected, 1 para directed: ")
 	fmt.Scanf("%d", &graphType)
@@ -272,6 +270,7 @@ func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 	//seteando canvas
 	canvas := gg.NewContext(1000, 1000)
 	canvas.SetRGB(255, 221, 80)
+	canvas.SetLineWidth(1)
 
 	//pintar nodos
 	var x, y float64
@@ -283,15 +282,16 @@ func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 				y = nodeCoor[i][j]
 			}
 		}
-		canvas.DrawString(strconv.Itoa(i), x, y)
+		canvas.DrawString(strconv.Itoa(i), x, (y - 30))
 		canvas.DrawCircle(x, y, 20)
+		canvas.Fill()
 	}
 
 	//pintar lineas
 	var x1, y1, x2, y2 float64
 	for i := 0; i < len(coleccion); i++ {
 		for j := 0; j < 2; j++ {
-			for k := 0; k < 2; k++ {
+			for k := 0; k < 2; k++ { //k para iterar elementos del otro arreglo
 				if j == 0 {
 					x1 = nodeCoor[coleccion[i][j]][0]
 					y1 = nodeCoor[coleccion[i][j]][1]
@@ -304,7 +304,6 @@ func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 		canvas.DrawLine(x1, y1, x2, y2)
 	}
 
-	canvas.SetLineWidth(2)
 	canvas.Stroke()
 	canvas.SavePNG("out.png")
 
