@@ -291,12 +291,14 @@ func plot(nodeCoor [][2]float64, coleccion [][2]int) {
 	var x1, y1, x2, y2 float64
 	for i := 0; i < len(coleccion); i++ {
 		for j := 0; j < 2; j++ {
-			if j == 0 {
-				x1 = nodeCoor[i][0]
-				y1 = nodeCoor[i][1]
-			} else {
-				x2 = nodeCoor[][j]
-				y2 = nodeCoor[][]
+			for k := 0; k < 2; k++ {
+				if j == 0 {
+					x1 = nodeCoor[coleccion[i][j]][0]
+					y1 = nodeCoor[coleccion[i][j]][1]
+				} else {
+					x2 = nodeCoor[coleccion[i][j]][0]
+					y2 = nodeCoor[coleccion[i][j]][1]
+				}
 			}
 		}
 		canvas.DrawLine(x1, y1, x2, y2)
