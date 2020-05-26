@@ -338,7 +338,7 @@ func euler(grados []int) string {
 
 	if odd == 2 {
 		result = "Hay un camino euleriano"
-	} else if odd == 0 {
+	} else if odd == 0 && even != 0 {
 		result = "Hay un ciclo euleriano"
 	} else {
 		result = "No hay ni camino ni ciclo euleriano"
