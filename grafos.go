@@ -258,7 +258,7 @@ func main() {
 	fmt.Println("")
 	for i := 0; i < vertexCount; i++ {
 		fmt.Print("		  [", i, "] ")
-		for j := 0; j < vertexCount; j++ {
+		for j := 0; j < len(coleccion); j++ {
 			fmt.Printf("%d  ", matrix1[i][j])
 		}
 		fmt.Println(" ")
