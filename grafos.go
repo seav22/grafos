@@ -191,6 +191,9 @@ func main() {
 			tipoGrafo = "Grafo Nulo"
 		}
 	}
+	//fmt.Println("Verificando las dos últimas conexiones entre vértices: ")
+	//fmt.Println(vertex[0])
+	//fmt.Println(vertex[1])
 
 	//CODIGO GUIA NO BORRAR
 	/*g.AddBoth(0, 1)// 0 -- 1
@@ -261,9 +264,19 @@ func main() {
 	}
 	fmt.Println("\n====================================================================\n")
 
-	fmt.Println(euler(grados))
+	//Comprobando si último nodo se conecta con el primero (para ciclo hamiltoniano)
+	vuleancito := comprobacionVertices(vertex[0], vertex[1], vertexCount)
+	//fmt.Println(vuleancito)
+
+	//si hay aristas -> comprobacion euler
+	if cuentaAviso > 0 {
+		fmt.Println(euler(grados))
+		fmt.Println(hamilton(vertexCount, grados, vuleancito))
+	}
 
 	plot(nodeCoor, coleccion)
+
+	fmt.Println("Fin del programa.")
 } //Fin funión main
 
 //Creando función con bienvenida e instrucciones
@@ -345,4 +358,39 @@ func euler(grados []int) string {
 	}
 
 	return result
+}
+
+//Funcion para comprobar si último vértice está conectado con el primero
+func comprobacionVertices(penultimo int, ultimo int, vertexCount int) bool {
+	var salida bool
+	if penultimo == vertexCount-1 && ultimo == 0 {
+		salida = true
+	} else if penultimo == 0 && penultimo == vertexCount-1 {
+		salida = true
+	}
+	return salida
+}
+
+//Funcion para camino hamiltoniano, es decir, pasa por todos los vértices sin repetición (teorema de DIRAC)
+func hamilton(vertexCount int, grados []int, vuleancito bool) string {
+	contador := 0
+	var salida string
+
+	if vertexCount >= 3 {
+		for i := 0; i < len(grados); i++ {
+			if grados[i] >= vertexCount/2 {
+				contador++
+			}
+		}
+	} else {
+		fmt.Println("Número de nodos menor a tres (3), por lo tanto...")
+	}
+	if contador == vertexCount && vuleancito == true {
+		salida = "Hay camino y ciclo hamiltoniano. Hay grafo hamiltoniano"
+	} else if contador == vertexCount && vuleancito == false {
+		salida = "Hay camino hamiltoniano. No hay ciclo hamiltoniano. No hay grafo hamiltoniano"
+	} else {
+		salida = "No hay camino hamiltoniano. No hay ciclo hamiltoniano. No hay grafo hamiltoniano"
+	}
+	return salida
 }
