@@ -204,8 +204,7 @@ func main() {
 		matrix1[i] = make([]int, len(coleccion))
 	}
 
-	// rellenando matriz de incidencia
-	//3 for para recorrer filas y columnas de la matriz y el array dentro de cada elemento de la matriz
+	//checkeando incidencia
 	for i := 0; i < vertexCount; i++ {
 		for j := 0; j < len(coleccion); j++ {
 			valida := coleccion[j][0]
@@ -256,7 +255,7 @@ func main() {
 	fmt.Println("")
 	for i := 0; i < vertexCount; i++ {
 		fmt.Print("		  [", i, "] ")
-		for j := 0; j < len(coleccion); j++ {
+		for j := 0; j < vertexCount; j++ {
 			fmt.Printf("%d  ", matrix1[i][j])
 		}
 		fmt.Println(" ")
