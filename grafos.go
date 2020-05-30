@@ -248,7 +248,7 @@ func main() {
 	fmt.Println("\n====================================================================\n")
 	fmt.Println("                Matriz de Incidencia\n")
 
-	for i := 0; i < vertexCount; i++ {
+	for i := 0; i < len(coleccion); i++ {
 		if i == 0 {
 			fmt.Print("                     [", i, "]")
 		} else {
