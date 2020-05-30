@@ -368,6 +368,8 @@ func comprobacionVertices(penultimo int, ultimo int, vertexCount int) bool {
 		salida = true
 	} else if penultimo == 0 && penultimo == vertexCount-1 {
 		salida = true
+	} else {
+		salida = false
 	}
 	return salida
 }
