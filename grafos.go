@@ -272,8 +272,11 @@ func main() {
 	//si hay aristas -> comprobacion euler
 	if cuentaAviso > 0 {
 		fmt.Println(euler(grados))
+		//fmt.Println("El grafo es Hamiltoniano")
 		fmt.Println(hamilton(vertexCount, grados, vuleancito))
 	}
+
+	planar(vertexCount, coleccion)
 
 	plot(nodeCoor, coleccion)
 
@@ -396,4 +399,23 @@ func hamilton(vertexCount int, grados []int, vuleancito bool) string {
 		salida = "No hay camino hamiltoniano. No hay ciclo hamiltoniano. No hay grafo hamiltoniano"
 	}
 	return salida
+}
+
+func planar(vertexCount int, coleccion [][2]int) {
+	check1 := false
+	check2 := false
+
+	if len(coleccion) <= (3*vertexCount - 6) {
+		check1 = true
+	}
+
+	if len(coleccion) <= (2*vertexCount - 4) {
+		check2 = true
+	}
+
+	if check1 || check2 {
+		fmt.Println("El grafo es plano.")
+	} else {
+		fmt.Println("El grafo no es plano.")
+	}
 }
