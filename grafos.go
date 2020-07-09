@@ -26,7 +26,7 @@ var coleccion [][2]int //slice de vectores
 
 func main() {
 
-	//Función de bienvenida y algunas instrucciones
+	//Función de bienvenida y algunas instrucciones.
 	welcomeAndInstrucciones()
 
 	//tamaño del grafo
